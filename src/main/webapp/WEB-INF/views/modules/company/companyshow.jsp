@@ -485,6 +485,9 @@
 				 		$("#hyzs").html(year+'年,所有企业所属行业总数');
 				 		$("#zczb").html(year+'年,所有企业注册资本数据');
 			 		}
+			 		if(start == '选择时间区间'){
+			 			start = null;
+			 		}
 			 		//首页方块检索
 			 		initDiamonds(start,end,year);
 			 		//首页柱形图
@@ -515,8 +518,8 @@
 			 // 基于准备好的dom，初始化echarts实例
 		         var myChart = echarts.init(document.getElementById('main'));
 		         var param_zhexian = {"year":2018}; 
-		         var company_Bar = null;
 		         var company_Bar = queryZhexian(param_zhexian);
+		         console.log(company_Bar);
 		         if(company_Bar!=null){
 		        	// 指定图表的配置项和数据
 			         var option = {

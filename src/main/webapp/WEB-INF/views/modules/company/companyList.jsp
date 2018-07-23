@@ -40,7 +40,7 @@
 			<li><label>企业名称：</label>
 				<form:input path="companyname" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
-			<li><label>法定代表人：</label>
+			<li><label style="width:90px;">法定代表人：</label>
 				<form:input path="legalName" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
 			<li><label>信用代码：</label>

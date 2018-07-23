@@ -134,6 +134,8 @@ public class ProjectDeclareController extends BaseController {
 		ArrayList<String> monthList2  = null;
 		ArrayList<String> returnlist2  = null;
 		param.put("year", year);
+		param.put("dateStart", request.getParameter("dateStart"));
+		param.put("dateEnd", request.getParameter("dateEnd"));
 		monthData declare = projectDeclareService.getzhexianData(param);
 		monthData handle = projectDeclareService.getzhexianhandleData(param);
         String year2 = String.valueOf(date2.get(Calendar.YEAR));

@@ -318,6 +318,12 @@ SUM(CASE WHEN MONTH(business_Hours_start) =11 THEN 1 ELSE 0 END) november,
 SUM(CASE WHEN MONTH(business_Hours_start) =12 THEN 1 ELSE 0 END) december
     FROM company
 	where year(business_Hours_start) = #{year} and del_flag = '0'
+	    <if test="dateStart != null and dateStart != ''">
+			 AND business_Hours_start >= #{dateStart}
+		</if>
+		<if test="dateEnd != null and dateEnd != ''">
+			 AND  #{dateEnd} >=  business_Hours_start
+		</if>
 	</select>
 	
 	<select id="getzhexianhangyeData" resultType="com.thinkgem.jeesite.modules.project.entity.monthData">
@@ -337,6 +343,12 @@ count(distinct case WHEN MONTH(business_Hours_start) =12 THEN industry_involved 
 
  from company 	where 
  year(business_Hours_start) = #{year} and del_flag = '0'
+ <if test="dateStart != null and dateStart != ''">
+			 AND business_Hours_start >= #{dateStart}
+		</if>
+		<if test="dateEnd != null and dateEnd != ''">
+			 AND  #{dateEnd} >=  business_Hours_start
+		</if>
 	</select>
 	<select id="analyze_credit" resultType="company" >
 		select company_qualityRating  ,count(1)  as  creditNum from company where del_flag = '0' group by company_qualityRating

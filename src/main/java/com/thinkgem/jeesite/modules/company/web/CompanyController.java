@@ -204,6 +204,8 @@ public class CompanyController extends BaseController {
 		HashMap<String,Object> returnMap = new HashMap<String,Object>();
 		HashMap<String,Object> param = new HashMap<String,Object>();
 		param.put("year", year);
+		param.put("dateStart", request.getParameter("dateStart"));
+		param.put("dateEnd", request.getParameter("dateEnd"));
 		Date date = new Date();
 		Calendar date2 = Calendar.getInstance();
 		ArrayList<String> monthList = null;
@@ -215,7 +217,7 @@ public class CompanyController extends BaseController {
         String year2 = String.valueOf(date2.get(Calendar.YEAR));
         int month = date.getMonth();
 		monthList = monthData!=null?monthData.changetoList():initList();
-		if(monthList.isEmpty()){
+		if(!monthList.isEmpty()){
 			returnlist = new ArrayList<String>();
 			for(int i=0;i<monthList.size();i++){
 				if(year2.equals(year)&&month<i){

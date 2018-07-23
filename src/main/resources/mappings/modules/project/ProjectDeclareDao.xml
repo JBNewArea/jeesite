@@ -248,6 +248,12 @@ SUM(CASE WHEN MONTH(declare_date) =11 THEN 1 ELSE 0 END) november,
 SUM(CASE WHEN MONTH(declare_date) =12 THEN 1 ELSE 0 END) december
     FROM project_declare
 	where year(declare_date) = #{year} and del_flag = '0'
+	<if test="dateStart != null and dateStart != ''">
+			 AND declare_date >= #{dateStart}
+		</if>
+		<if test="dateEnd != null and dateEnd != ''">
+			 AND  #{dateEnd} >=  declare_date
+		</if>
 	</select>
 	
 	<select id="getType" resultType="com.thinkgem.jeesite.modules.company.entity.echartsData">

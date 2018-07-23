@@ -75,7 +75,7 @@
 								<i class="fa-folder"></i>
 							</div>
 							<div class="xe-label">
-								<strong class="num" id="companyAll"></strong>
+								<strong class="num" id="project_sb"></strong>
 								<span>申报项目总数（个）</span>
 							</div>
 						</div>
@@ -95,7 +95,7 @@
 								<i class="fa-check-square-o"></i>
 							</div>
 							<div class="xe-label">
-								<strong class="num" id="company_zy"></strong>
+								<strong class="num" id="project_ba"></strong>
 								<span>备案项目（个）</span>
 							</div>
 						</div>
@@ -116,7 +116,7 @@
 								<i class="fa-folder-open"></i>
 							</div>
 							<div class="xe-label">
-								<strong class="num" id="company_hangye"></strong>
+								<strong class="num" id="project_hz"></strong>
 								<span>核准（个）</span>
 							</div>
 						</div>
@@ -135,7 +135,7 @@
 								<i class="fa-edit"></i>
 							</div>
 							<div class="xe-label">
-								<strong class="num" id="company_zhuce"></strong>
+								<strong class="num" id="project_sp"></strong>
 								<span>审批项目（个）</span>
 							</div>
 						</div>
@@ -450,10 +450,10 @@
 								data:data,
 								dataType:'json',
 								success:function(res){
-									$('#companyAll').html(res.declare);
-									$('#company_zy').html(res.hezhun);
-									$('#company_hangye').html(res.ba);
-									$('#company_zhuce').html(res.sp);
+									$('#project_sb').html(res.declare);
+									$('#project_ba').html(res.ba);
+									$('#project_hz').html(res.hezhun);
+									$('#project_sp').html(res.sp);
 									if(fist_num == 0){
 										loadDescribe();
 									}
@@ -498,6 +498,7 @@
 				         myChart.setOption(option);
 				 	}
 					function query_zhexian(param_zhexian){
+						console.log(param_zhexian);
 						var result = null;
 						$.ajax({
 				        	url:"zhexian",
@@ -506,6 +507,7 @@
 							dataType:'json',
 							async:false, 
 							success:function(data){
+								console.log(data);
 								result = data;
 							}
 				         });
@@ -529,6 +531,9 @@
 					 		$("#zyqy").html(year+'年,所有备案项目数据');
 					 		$("#hyzs").html(year+'年,所有项目核准数据');
 					 		$("#zczb").html(year+'年,所有项目审批数据');
+				 		}
+				 		if(start == '选择时间区间'){
+				 			start = null;
 				 		}
 				 		//首页方块检索
 				 		initDiamonds(start,end,year);
