@@ -63,7 +63,6 @@
 		</repository>
 		
 	</repositories>
-	
 	<!-- 设定插件仓库 -->
 	<pluginRepositories> 
 	
