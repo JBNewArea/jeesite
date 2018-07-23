@@ -7,7 +7,6 @@
 	<artifactId>jeesite</artifactId>
 	<version>1.2.7</version>
 	<packaging>war</packaging>
-	
 	<name>JeeSite</name>
 	<url>http://thinkgem.github.com/jeesite</url>
 	<inceptionYear>2012-2016</inceptionYear>
