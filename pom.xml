@@ -13,7 +13,7 @@
 	<inceptionYear>2012-2016</inceptionYear>
 	
 	<!-- 项目属性 -->
-	<properties>
+	<properties> 
 		
 		<!-- main version setting -->
 		<spring.version>4.1.9.RELEASE</spring.version>
