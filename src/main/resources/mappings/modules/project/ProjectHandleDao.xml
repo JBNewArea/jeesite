@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.project.dao.ProjectHandleDao">
+    
+	<sql id="projectHandleColumns">
+		a.id AS "id",
+		a.project_declare_id AS "projectDeclare.id",
+		a.name AS "name",
+		a.handle_status AS "handleStatus",
+		a.end_code AS "endCode",
+		a.date AS "date",
+		a.office AS "office",
+		a.caozuo_date AS "caozuoDate",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="projectHandleJoins">
+		LEFT JOIN project_declare b ON b.id = a.project_declare_id
+	</sql>
+    
+	<select id="get" resultType="ProjectHandle">
+		SELECT 
+			<include refid="projectHandleColumns"/>
+		FROM project_handle a
+		<include refid="projectHandleJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="ProjectHandle">
+		SELECT 
+			<include refid="projectHandleColumns"/>
+		FROM project_handle a
+		<include refid="projectHandleJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="projectDeclare != null and projectDeclare.id != null and projectDeclare.id != ''">
+				AND a.project_declare_id = #{projectDeclare.id}
+			</if>
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date ASC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="ProjectHandle">
+		SELECT 
+			<include refid="projectHandleColumns"/>
+		FROM project_handle a
+		<include refid="projectHandleJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date ASC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO project_handle(
+			id,
+			project_declare_id,
+			name,
+			handle_status,
+			end_code,
+			date,
+			office,
+			caozuo_date,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{projectDeclare.id},
+			#{name},
+			#{handleStatus},
+			#{endCode},
+			#{date},
+			#{office},
+			#{caozuoDate},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE project_handle SET 	
+			project_declare_id = #{projectDeclare.id},
+			name = #{name},
+			handle_status = #{handleStatus},
+			end_code = #{endCode},
+			date = #{date},
+			office = #{office},
+			caozuo_date = #{caozuoDate},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE project_handle SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		<choose>
+			<when test="id !=null and id != ''">
+				WHERE id = #{id}
+			</when>
+			<otherwise>
+				WHERE project_declare_id = #{projectDeclare.id}
+			</otherwise>
+		</choose>
+	</update>
+	
+	<!-- taojie -->
+	<select id="getAccount" resultType="Integer">
+		SELECT 
+			count(*)
+		FROM project_declare where del_flag = '0' and name_first != ''
+	</select>
+	
+	<select id="getzhexianhandleData" resultType="com.thinkgem.jeesite.modules.project.entity.monthData">
+		SELECT 
+SUM(CASE WHEN MONTH(caozuodate_first) =1 THEN 1 ELSE 0 END) january,   
+SUM(CASE WHEN MONTH(caozuodate_first) =2 THEN 1 ELSE 0 END) february,
+SUM(CASE WHEN MONTH(caozuodate_first) =3 THEN 1 ELSE 0 END) march,
+SUM(CASE WHEN MONTH(caozuodate_first) =4 THEN 1 ELSE 0 END) april,
+SUM(CASE WHEN MONTH(caozuodate_first) =5 THEN 1 ELSE 0 END) may,
+SUM(CASE WHEN MONTH(caozuodate_first) =6 THEN 1 ELSE 0 END) june,
+SUM(CASE WHEN MONTH(caozuodate_first) =7 THEN 1 ELSE 0 END) july,
+SUM(CASE WHEN MONTH(caozuodate_first) =8 THEN 1 ELSE 0 END) august,
+SUM(CASE WHEN MONTH(caozuodate_first) =9 THEN 1 ELSE 0 END) september,
+SUM(CASE WHEN MONTH(caozuodate_first) =10 THEN 1 ELSE 0 END) october,
+SUM(CASE WHEN MONTH(caozuodate_first) =11 THEN 1 ELSE 0 END) november,
+SUM(CASE WHEN MONTH(caozuodate_first) =12 THEN 1 ELSE 0 END) december
+    FROM project_declare
+	where year(caozuodate_first) = #{year} and del_flag = '0'
+	</select>
+	
+</mapper>

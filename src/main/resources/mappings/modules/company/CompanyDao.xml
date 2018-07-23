@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.company.dao.CompanyDao">
+    
+	<sql id="companyColumns">
+		a.id AS "id",
+		a.company_creditcode AS "companyCreditcode",
+		a.company_creditcode_state AS "companyCreditcodeState",
+		a.old_registernumber AS "oldRegisternumber",
+		a.company_place AS "companyPlace",
+		a.company_qualityrating AS "companyQualityrating",
+		a.permitnumber AS "permitnumber",
+		a.companyname AS "companyname",
+		a.company_state AS "companyState",
+		a.companydomicile AS "companydomicile",
+		a.domicile_administrativedivision AS "domicileAdministrativedivision",
+		a.domicile_equities AS "domicileEquities",
+		a.domicile_expirationdate AS "domicileExpirationdate",
+		a.legal_identitycard AS "legalIdentitycard",
+		a.legal_name AS "legalName",
+		a.industry_involved AS "industryInvolved",
+		a.company_type AS "companyType",
+		a.registered_capital AS "registeredCapital",
+		a.registration_authority AS "registrationAuthority",
+		a.popedom AS "popedom",
+		a.entrusted_agency AS "entrustedAgency",
+		a.urbanandrural AS "urbanandrural",
+		a.establishment AS "establishment",
+		a.annual_inspection AS "annualInspection",
+		a.licensed_project AS "licensedProject",
+		a.general_business_project AS "generalBusinessProject",
+		a.scope_of_operation AS "scopeOfOperation",
+		a.business_hours_start AS "businessHoursStart",
+		a.business_hours_end AS "businessHoursEnd",
+		a.licensing_date AS "licensingDate",
+		a.approval_date AS "approvalDate",
+		a.copy_number AS "copyNumber",
+		a.practitioners_number AS "practitionersNumber",
+		a.belaid_off_number AS "belaidOffNumber",
+		a.investor_number AS "investorNumber",
+		a.investor_laid_off_number AS "investorLaidOffNumber",
+		a.employee_number AS "employeeNumber",
+		a.employee_laid_off_number AS "employeeLaidOffNumber",
+		a.place_laid_off_number AS "placeLaidOffNumber",
+		a.postal_code AS "postalCode",
+		a.contact_number AS "contactNumber",
+		a.fax AS "fax",
+		a.email AS "email",
+		a.website AS "website",
+		a.transformation_register_mark AS "transformationRegisterMark",
+		a.xunchazu AS "xunchazu",
+		a.cube_style AS "cubeStyle",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="companyJoins">
+	</sql>
+    
+	<select id="get" resultType="Company">
+		SELECT 
+			<include refid="companyColumns"/>
+		FROM company a
+		<include refid="companyJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	
+	<select id="findList" resultType="Company">
+		SELECT 
+			<include refid="companyColumns"/>
+		FROM company a
+		<include refid="companyJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="companyname != null and companyname != ''">
+				AND a.companyname LIKE 
+					<if test="dbName == 'oracle'">'%'||#{companyname}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{companyname}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{companyname},'%')</if>
+			</if>
+			<if test="legalName != null and legalName != ''">
+				AND a.legal_name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{legalName}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{legalName}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{legalName},'%')</if>
+			</if>
+			<if test="companyCreditcode != null and companyCreditcode != ''">
+				AND a.company_creditcode LIKE 
+					<if test="dbName == 'oracle'">'%'||#{companyCreditcode}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{companyCreditcode}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{companyCreditcode},'%')</if>
+			</if>
+			<if test="industryInvolved != null and industryInvolved != ''">
+				AND a.industry_involved LIKE 
+					<if test="dbName == 'oracle'">'%'||#{industryInvolved}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{industryInvolved}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{industryInvolved},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Company">
+		SELECT 
+			<include refid="companyColumns"/>
+		FROM company a
+		<include refid="companyJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO company(
+			id,
+			company_creditcode,
+			company_creditcode_state,
+			old_registernumber,
+			company_place,
+			company_qualityrating,
+			permitnumber,
+			companyname,
+			company_state,
+			companydomicile,
+			domicile_administrativedivision,
+			domicile_equities,
+			domicile_expirationdate,
+			legal_identitycard,
+			legal_name,
+			industry_involved,
+			company_type,
+			registered_capital,
+			registration_authority,
+			popedom,
+			entrusted_agency,
+			urbanandrural,
+			establishment,
+			annual_inspection,
+			licensed_project,
+			general_business_project,
+			scope_of_operation,
+			business_hours_start,
+			business_hours_end,
+			licensing_date,
+			approval_date,
+			copy_number,
+			practitioners_number,
+			belaid_off_number,
+			investor_number,
+			investor_laid_off_number,
+			employee_number,
+			employee_laid_off_number,
+			place_laid_off_number,
+			postal_code,
+			contact_number,
+			fax,
+			email,
+			website,
+			transformation_register_mark,
+			xunchazu,
+			cube_style,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{companyCreditcode},
+			#{companyCreditcodeState},
+			#{oldRegisternumber},
+			#{companyPlace},
+			#{companyQualityrating},
+			#{permitnumber},
+			#{companyname},
+			#{companyState},
+			#{companydomicile},
+			#{domicileAdministrativedivision},
+			#{domicileEquities},
+			#{domicileExpirationdate},
+			#{legalIdentitycard},
+			#{legalName},
+			#{industryInvolved},
+			#{companyType},
+			#{registeredCapital},
+			#{registrationAuthority},
+			#{popedom},
+			#{entrustedAgency},
+			#{urbanandrural},
+			#{establishment},
+			#{annualInspection},
+			#{licensedProject},
+			#{generalBusinessProject},
+			#{scopeOfOperation},
+			#{businessHoursStart},
+			#{businessHoursEnd},
+			#{licensingDate},
+			#{approvalDate},
+			#{copyNumber},
+			#{practitionersNumber},
+			#{belaidOffNumber},
+			#{investorNumber},
+			#{investorLaidOffNumber},
+			#{employeeNumber},
+			#{employeeLaidOffNumber},
+			#{placeLaidOffNumber},
+			#{postalCode},
+			#{contactNumber},
+			#{fax},
+			#{email},
+			#{website},
+			#{transformationRegisterMark},
+			#{xunchazu},
+			#{cubeStyle},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE company SET 	
+			company_creditcode = #{companyCreditcode},
+			company_creditcode_state = #{companyCreditcodeState},
+			old_registernumber = #{oldRegisternumber},
+			company_place = #{companyPlace},
+			company_qualityrating = #{companyQualityrating},
+			permitnumber = #{permitnumber},
+			companyname = #{companyname},
+			company_state = #{companyState},
+			companydomicile = #{companydomicile},
+			domicile_administrativedivision = #{domicileAdministrativedivision},
+			domicile_equities = #{domicileEquities},
+			domicile_expirationdate = #{domicileExpirationdate},
+			legal_identitycard = #{legalIdentitycard},
+			legal_name = #{legalName},
+			industry_involved = #{industryInvolved},
+			company_type = #{companyType},
+			registered_capital = #{registeredCapital},
+			registration_authority = #{registrationAuthority},
+			popedom = #{popedom},
+			entrusted_agency = #{entrustedAgency},
+			urbanandrural = #{urbanandrural},
+			establishment = #{establishment},
+			annual_inspection = #{annualInspection},
+			licensed_project = #{licensedProject},
+			general_business_project = #{generalBusinessProject},
+			scope_of_operation = #{scopeOfOperation},
+			business_hours_start = #{businessHoursStart},
+			business_hours_end = #{businessHoursEnd},
+			licensing_date = #{licensingDate},
+			approval_date = #{approvalDate},
+			copy_number = #{copyNumber},
+			practitioners_number = #{practitionersNumber},
+			belaid_off_number = #{belaidOffNumber},
+			investor_number = #{investorNumber},
+			investor_laid_off_number = #{investorLaidOffNumber},
+			employee_number = #{employeeNumber},
+			employee_laid_off_number = #{employeeLaidOffNumber},
+			place_laid_off_number = #{placeLaidOffNumber},
+			postal_code = #{postalCode},
+			contact_number = #{contactNumber},
+			fax = #{fax},
+			email = #{email},
+			website = #{website},
+			transformation_register_mark = #{transformationRegisterMark},
+			xunchazu = #{xunchazu},
+			cube_style = #{cubeStyle},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE company SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	<select id="getzhexianData" resultType="com.thinkgem.jeesite.modules.project.entity.monthData">
+		SELECT 
+SUM(CASE WHEN MONTH(business_Hours_start) =1 THEN 1 ELSE 0 END) january,   
+SUM(CASE WHEN MONTH(business_Hours_start) =2 THEN 1 ELSE 0 END) february,
+SUM(CASE WHEN MONTH(business_Hours_start) =3 THEN 1 ELSE 0 END) march,
+SUM(CASE WHEN MONTH(business_Hours_start) =4 THEN 1 ELSE 0 END) april,
+SUM(CASE WHEN MONTH(business_Hours_start) =5 THEN 1 ELSE 0 END) may,
+SUM(CASE WHEN MONTH(business_Hours_start) =6 THEN 1 ELSE 0 END) june,
+SUM(CASE WHEN MONTH(business_Hours_start) =7 THEN 1 ELSE 0 END) july,
+SUM(CASE WHEN MONTH(business_Hours_start) =8 THEN 1 ELSE 0 END) august,
+SUM(CASE WHEN MONTH(business_Hours_start) =9 THEN 1 ELSE 0 END) september,
+SUM(CASE WHEN MONTH(business_Hours_start) =10 THEN 1 ELSE 0 END) october,
+SUM(CASE WHEN MONTH(business_Hours_start) =11 THEN 1 ELSE 0 END) november,
+SUM(CASE WHEN MONTH(business_Hours_start) =12 THEN 1 ELSE 0 END) december
+    FROM company
+	where year(business_Hours_start) = #{year} and del_flag = '0'
+	</select>
+	
+	<select id="getzhexianhangyeData" resultType="com.thinkgem.jeesite.modules.project.entity.monthData">
+		select 
+count(distinct case WHEN MONTH(business_Hours_start) =1 THEN industry_involved ELSE null END) january ,
+count(distinct case WHEN MONTH(business_Hours_start) =2 THEN industry_involved ELSE null END) february,
+count(distinct case WHEN MONTH(business_Hours_start) =3 THEN industry_involved ELSE null END) march,
+count(distinct case WHEN MONTH(business_Hours_start) =4 THEN industry_involved ELSE null END) april,
+count(distinct case WHEN MONTH(business_Hours_start) =5 THEN industry_involved ELSE null END) may,
+count(distinct case WHEN MONTH(business_Hours_start) =6 THEN industry_involved ELSE null END) june,
+count(distinct case WHEN MONTH(business_Hours_start) =7 THEN industry_involved ELSE null END) july,
+count(distinct case WHEN MONTH(business_Hours_start) =8 THEN industry_involved ELSE null END) august,
+count(distinct case WHEN MONTH(business_Hours_start) =9 THEN industry_involved ELSE null END) september,
+count(distinct case WHEN MONTH(business_Hours_start) =10 THEN industry_involved ELSE null END) october,
+count(distinct case WHEN MONTH(business_Hours_start) =11 THEN industry_involved ELSE null END) november,
+count(distinct case WHEN MONTH(business_Hours_start) =12 THEN industry_involved ELSE null END) december
+
+ from company 	where 
+ year(business_Hours_start) = #{year} and del_flag = '0'
+	</select>
+	<select id="analyze_credit" resultType="company" >
+		select company_qualityRating  ,count(1)  as  creditNum from company where del_flag = '0' group by company_qualityRating
+	</select>
+	<select id="sel_industry" resultType="company">
+		select industry_involved,count(1) as industryNun  from company where del_flag = '0' group by industry_involved
+	</select>
+	<select id="getAllCount" resultType="Integer">
+		select count(*) 
+		from company where del_flag = '0'
+		<if test="dateStart != null and dateStart != ''">
+			 AND business_Hours_start >= #{dateStart}
+		</if>
+		<if test="dateEnd != null and dateEnd != ''">
+			 AND  #{dateEnd} >=  business_Hours_start
+		</if>
+		<if test="dateYear !=null and dateYear !=''">
+		   AND EXTRACT(YEAR FROM business_Hours_start) = #{dateYear}
+		</if>
+	</select>
+	
+	<select id="getzaiye" resultType="Integer">
+		select count(*)
+		from company
+		where company_state like concat('%',#{companyState},'%')  and del_flag = '0'
+		<if test="dateStart != null and dateStart != ''">
+			 AND business_Hours_start >= #{dateStart}
+		</if>
+		<if test="dateEnd != null and dateEnd != ''">
+			 AND  #{dateEnd} >=  business_Hours_start
+		</if>
+		<if test="dateYear !=null and dateYear !=''">
+		   AND EXTRACT(YEAR FROM business_Hours_start) = #{dateYear}
+		</if>
+	</select>
+	
+	<select id="gethangye" resultType="company">
+		select industry_involved from company
+	 	where del_flag = '0' 
+	 	<if test="dateStart != null and dateStart != ''">
+			 AND business_Hours_start >= #{dateStart}
+		</if>
+		<if test="dateEnd != null and dateEnd != ''">
+			 AND  #{dateEnd} >=  business_Hours_start
+		</if>
+		<if test="dateYear !=null and dateYear !=''">
+		   AND EXTRACT(YEAR FROM business_Hours_start) = #{dateYear}
+		</if>
+		group by industry_involved 
+	</select>
+	
+	<select id="getzhuce" resultType="Double">
+		select IFNULL(SUM(registered_capital),0) from company where del_flag = '0'
+		<if test="dateStart != null and dateStart != ''">
+			 AND business_Hours_start >= #{dateStart}
+		</if>
+		<if test="dateEnd != null and dateEnd != ''">
+			 AND  #{dateEnd} >=  business_Hours_start
+		</if>
+		<if test="dateYear !=null and dateYear !=''">
+		   AND EXTRACT(YEAR FROM business_Hours_start) = #{dateYear}
+		</if>
+	</select>
+	
+	<select id="distinctCongye" resultType="com.thinkgem.jeesite.modules.company.entity.personCount">
+		select  count(case  when practitioners_number>0 and 50 > practitioners_number then 'low' end) low,
+		count(case  when practitioners_number>=50 and 100>practitioners_number then 'middle' end) middle,
+		count(case  when practitioners_number>=100 and 500> practitioners_number then 'bigmiddle' end) bigmiddle,
+		count(case when practitioners_number >= 500 then 'big' end) big
+		 from company 
+		 where del_flag = '0'
+	</select>
+	
+	<select id="distinctzhuce" resultType="com.thinkgem.jeesite.modules.company.entity.moneyCount">
+		select  
+			count(case  when registered_capital>=0 and 100>registered_capital then 'low' end) low,
+			count(case  when registered_capital>=100 and 1000>registered_capital then 'middle' end) middle,
+			count(case  when registered_capital>=1000 and 10000>registered_capital then 'bigmiddle' end) bigmiddle,
+			count(case when registered_capital >= 10000 then 'big' end) big
+		 from company 
+		 where del_flag = '0'
+	</select>
+	
+	<select id="getAllType" resultType="com.thinkgem.jeesite.modules.company.entity.echartsData">
+		select company_Type as name,count(company_Type) as value from company where del_flag = '0' group by company_Type 
+	</select>
+</mapper>

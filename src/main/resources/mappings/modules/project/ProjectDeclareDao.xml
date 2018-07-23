@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.project.dao.ProjectDeclareDao">
+    
+	<sql id="projectDeclareColumns">
+		a.id AS "id",
+		a.declare_date AS "declareDate",
+		a.project_code AS "projectCode",
+		a.project_type AS "projectType",
+		a.project_attribute AS "projectAttribute",
+		a.project_name AS "projectName",
+		a.project_unit AS "projectUnit",
+		a.legal_unit_info AS "legalUnitInfo",
+		a.money AS "money",
+		a.guobiao AS "guobiao",
+		a.guanli AS "guanli",
+		a.build_place AS "buildPlace",
+		a.build_detail_place AS "buildDetailPlace",
+		a.scaleandinfo AS "scaleandinfo",
+		a.name AS "name",
+		a.phone AS "phone",
+		a.name_first	AS "nameFirst",
+		a.status_first AS "statusFirst",
+		a.wenhao_first AS "wenhaoFirst",
+		a.riqi_first AS "riqiFirst",
+		a.bumen_first AS "bumenFirst",
+		a.caozuodate_first AS "caozuodateFirst",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="projectDeclareJoins">
+	</sql>
+    
+	<select id="get" resultType="ProjectDeclare">
+		SELECT 
+			<include refid="projectDeclareColumns"/>
+		FROM project_declare a
+		<include refid="projectDeclareJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="ProjectDeclare">
+		SELECT 
+			<include refid="projectDeclareColumns"/>
+		FROM project_declare a
+		<include refid="projectDeclareJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="projectCode != null and projectCode != ''">
+				AND a.project_code LIKE 
+					<if test="dbName == 'oracle'">'%'||#{projectCode}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{projectCode}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{projectCode},'%')</if>
+			</if>
+			<if test="projectName != null and projectName != ''">
+				AND a.project_name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{projectName}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{projectName}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{projectName},'%')</if>
+			</if>
+			<if test="projectType != null and projectType != ''">
+				AND a.project_type LIKE 
+					<if test="dbName == 'oracle'">'%'||#{projectType}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{projectType}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{projectType},'%')</if>
+			</if>
+			<if test="guanli != null and guanli != ''">
+				AND a.guanli LIKE 
+					<if test="dbName == 'oracle'">'%'||#{guanli}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{guanli}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{guanli},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="ProjectDeclare">
+		SELECT 
+			<include refid="projectDeclareColumns"/>
+		FROM project_declare a
+		<include refid="projectDeclareJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO project_declare(
+			id,
+			declare_date,
+			project_code,
+			project_type,
+			project_attribute,
+			project_name,
+			project_unit,
+			legal_unit_info,
+			money,
+			guobiao,
+			guanli,
+			build_place,
+			build_detail_place,
+			scaleandinfo,
+			name,
+			phone,
+			name_first,
+		status_first,
+		wenhao_first,
+		riqi_first,
+		bumen_first,
+		caozuodate_first,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{declareDate},
+			#{projectCode},
+			#{projectType},
+			#{projectAttribute},
+			#{projectName},
+			#{projectUnit},
+			#{legalUnitInfo},
+			#{money},
+			#{guobiao},
+			#{guanli},
+			#{buildPlace},
+			#{buildDetailPlace},
+			#{scaleandinfo},
+			#{name},
+			#{phone},
+			#{nameFirst},
+			#{statusFirst},
+			#{wenhaoFirst},
+			#{riqiFirst},
+			#{bumenFirst},
+			#{caozuodateFirst},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE project_declare SET 	
+			declare_date = #{declareDate},
+			project_code = #{projectCode},
+			project_type = #{projectType},
+			project_attribute = #{projectAttribute},
+			project_name = #{projectName},
+			project_unit = #{projectUnit},
+			legal_unit_info = #{legalUnitInfo},
+			money = #{money},
+			guobiao = #{guobiao},
+			guanli = #{guanli},
+			build_place = #{buildPlace},
+			build_detail_place = #{buildDetailPlace},
+			scaleandinfo = #{scaleandinfo},
+			name = #{name},
+			phone = #{phone},
+			name_first	= #{nameFirst},
+		status_first = #{statusFirst},
+		wenhao_first = #{wenhaoFirst},
+		riqi_first = #{riqiFirst},
+		bumen_first =  #{bumenFirst},
+		caozuodate_first = #{caozuodateFirst},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE project_declare SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	<!-- taojie -->
+	<select id="getAccount" resultType="Integer">
+		SELECT 
+			count(*)
+		FROM project_declare where del_flag = '0'
+		<if test="dateStart != null and dateStart != ''">
+			 AND declare_date >= #{dateStart}
+		</if>
+		<if test="dateEnd != null and dateEnd != ''">
+			 AND  #{dateEnd} >=  declare_date
+		</if>
+		<if test="dateYear !=null and dateYear !=''">
+		   AND EXTRACT(YEAR FROM declare_date) = #{dateYear}
+		</if>
+	</select>
+	
+	<select id="findAccountByType" resultType="Integer">
+		select count(*)
+		from project_declare 
+		where project_type like concat('%',#{projectType},'%') and del_flag = '0'
+		<if test="dateStart != null and dateStart != ''">
+			 AND declare_date >= #{dateStart}
+		</if>
+		<if test="dateEnd != null and dateEnd != ''">
+			 AND  #{dateEnd} >=  declare_date
+		</if>
+		<if test="dateYear !=null and dateYear !=''">
+		   AND EXTRACT(YEAR FROM declare_date) = #{dateYear}
+		</if>
+	</select>
+	
+	<select id="getzhexianData" resultType="com.thinkgem.jeesite.modules.project.entity.monthData">
+		SELECT 
+SUM(CASE WHEN MONTH(declare_date) =1 THEN 1 ELSE 0 END) january,   
+SUM(CASE WHEN MONTH(declare_date) =2 THEN 1 ELSE 0 END) february,
+SUM(CASE WHEN MONTH(declare_date) =3 THEN 1 ELSE 0 END) march,
+SUM(CASE WHEN MONTH(declare_date) =4 THEN 1 ELSE 0 END) april,
+SUM(CASE WHEN MONTH(declare_date) =5 THEN 1 ELSE 0 END) may,
+SUM(CASE WHEN MONTH(declare_date) =6 THEN 1 ELSE 0 END) june,
+SUM(CASE WHEN MONTH(declare_date) =7 THEN 1 ELSE 0 END) july,
+SUM(CASE WHEN MONTH(declare_date) =8 THEN 1 ELSE 0 END) august,
+SUM(CASE WHEN MONTH(declare_date) =9 THEN 1 ELSE 0 END) september,
+SUM(CASE WHEN MONTH(declare_date) =10 THEN 1 ELSE 0 END) october,
+SUM(CASE WHEN MONTH(declare_date) =11 THEN 1 ELSE 0 END) november,
+SUM(CASE WHEN MONTH(declare_date) =12 THEN 1 ELSE 0 END) december
+    FROM project_declare
+	where year(declare_date) = #{year} and del_flag = '0'
+	</select>
+	
+	<select id="getType" resultType="com.thinkgem.jeesite.modules.company.entity.echartsData">
+		select project_type as name,count(project_type) as value from project_declare where del_flag = '0' group by project_type 
+	</select>
+	
+	<select id="getAttribute" resultType="com.thinkgem.jeesite.modules.company.entity.echartsData">
+		select project_attribute as name,count(project_attribute) as value from project_declare where del_flag = '0' group by project_attribute 
+	</select>
+	
+	<select id="getguobiao" resultType="com.thinkgem.jeesite.modules.company.entity.echartsData">
+		select guanli as name,count(guanli) as value from project_declare where del_flag = '0' group by guanli 
+	</select>
+	
+	<select id="getMoney" resultType="com.thinkgem.jeesite.modules.company.entity.moneyCount">
+		select  
+			count(case  when money>=0 and 100>money then 'low' end) low,
+			count(case  when money>=100 and 1000>money then 'middle' end) middle,
+			count(case  when money>=1000 and 10000>money then 'bigmiddle' end) bigmiddle,
+			count(case when money >= 10000 then 'big' end) big
+		 from project_declare 
+		 where del_flag = '0'
+	</select>
+</mapper>
