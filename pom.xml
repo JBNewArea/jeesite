@@ -59,7 +59,6 @@
 			<name>Jeesite Repository</name>
 			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
 		</repository>
-		
 	</repositories>
 	<!-- 设定插件仓库 -->
 	<pluginRepositories> 
