@@ -289,9 +289,9 @@
         		    legend: {
         		        orient: 'vertical',
         		        x: 'left',
-        		        data:chartColor
+        		        data:['100万以下','100-1000万','1000万-1亿','1亿以上']
         		    },
-        		    color : ['#ff7f50','#87cefa', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'],
+        		    color : chartColor,
         		    series: [
         		        {
         		            name:'从业资本',
