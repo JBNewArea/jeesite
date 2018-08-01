@@ -290,8 +290,6 @@
          // 使用刚指定的配置项和数据显示图表。
          myChart.setOption(option);
          myChart = echarts.init(document.getElementById('doughnut_zb'));
-         console.log(projectAttribute_name);
-         console.log(projectAttribute);
 	 	 //指定图表的配置项和数据
          var option = {
 					tooltip: {
