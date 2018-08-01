@@ -290,6 +290,8 @@
          // 使用刚指定的配置项和数据显示图表。
          myChart.setOption(option);
          myChart = echarts.init(document.getElementById('doughnut_zb'));
+         console.log(projectAttribute_name);
+         console.log(projectAttribute);
 	 	 //指定图表的配置项和数据
          var option = {
 					tooltip: {
@@ -415,7 +417,6 @@
 			         myChart = echarts.init(document.getElementById('main'));
 			         var param_zhexian = {"year":2018}; 
 			         var result = query_zhexian(param_zhexian);
-			         console.log(result);
 			         var declare = result["declare"]
 				         if(declare!=null){
 				        	// 指定图表的配置项和数据
@@ -498,7 +499,6 @@
 				         myChart.setOption(option);
 				 	}
 					function query_zhexian(param_zhexian){
-						console.log(param_zhexian);
 						var result = null;
 						$.ajax({
 				        	url:"zhexian",
@@ -507,7 +507,6 @@
 							dataType:'json',
 							async:false, 
 							success:function(data){
-								console.log(data);
 								result = data;
 							}
 				         });
