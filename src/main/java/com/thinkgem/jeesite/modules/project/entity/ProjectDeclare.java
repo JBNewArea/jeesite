@@ -32,7 +32,7 @@ public class ProjectDeclare extends DataEntity<ProjectDeclare> {
 	private String projectName;		// 项目名称
 	private String projectUnit;		// 申报单位
 	private String legalUnitInfo;		// 法人单位信息
-	private double money;		// 项目投资额
+	private String money;		// 项目投资额
 	private String guobiao;		// 国标行业
 	private String guanli;		// 管理行业
 	private String buildPlace;		// 建设地点
@@ -156,11 +156,11 @@ public class ProjectDeclare extends DataEntity<ProjectDeclare> {
 	
 	@Length(min=0, max=64, message="项目投资额长度必须介于 1 和 64 之间")
 	@ExcelField(title="项目投资额(万元)", align=2, sort=55)
-	public double getMoney() {
+	public String getMoney() {
 		return money;
 	}
 
-	public void setMoney(double money) {
+	public void setMoney(String money) {
 		this.money = money;
 	}
 	
