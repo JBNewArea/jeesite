@@ -28,4 +28,5 @@ public interface ProjectDeclareDao extends CrudDao<ProjectDeclare> {
 	ArrayList<echartsData> getType();
 	ArrayList<echartsData> getguobiao();
 	moneyCount getMoney();
+	ArrayList<ProjectDeclare> queryProject(ProjectDeclare projectDeclare);
 }

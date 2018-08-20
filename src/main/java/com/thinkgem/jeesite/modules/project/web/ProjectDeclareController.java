@@ -2,17 +2,15 @@
  * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.modules.project.web;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
-
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,20 +22,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.thinkgem.jeesite.common.beanvalidator.BeanValidators;
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.utils.excel.ImportExcel;
-import com.thinkgem.jeesite.modules.company.entity.Company;
 import com.thinkgem.jeesite.modules.company.entity.echartsData;
 import com.thinkgem.jeesite.modules.company.entity.moneyCount;
-import com.thinkgem.jeesite.modules.company.entity.personCount;
 import com.thinkgem.jeesite.modules.project.entity.ProjectDeclare;
 import com.thinkgem.jeesite.modules.project.entity.monthData;
 import com.thinkgem.jeesite.modules.project.service.ProjectDeclareService;
+import net.sf.json.JSONArray;
+
 
 /**
  * 项目入库Controller
@@ -100,6 +97,66 @@ public class ProjectDeclareController extends BaseController {
 		return "redirect:"+Global.getAdminPath()+"/project/projectDeclare/?repage";
 	}
 	
+	
+	@RequiresPermissions("project:projectDeclare:view")
+	@RequestMapping(value = "mapPic")
+	public String showMapPic(RedirectAttributes redirectAttributes,Model model){
+		//组装参数
+				ProjectDeclare projectDeclareDto = new ProjectDeclare();
+				ArrayList<ProjectDeclare> list  = projectDeclareService.queryProject(projectDeclareDto);
+				List<Map<String,Object>> list_1 = new ArrayList<>();
+				Map<String,Object> _tempMap = null;
+				if(!list.isEmpty()){
+					for (ProjectDeclare _projectDeclare : list) {
+						_tempMap = new HashMap();
+						_tempMap.put("longitude",_projectDeclare.getLongitude());
+						_tempMap.put("latitude", _projectDeclare.getLatitude());
+						_tempMap.put("projectName",_projectDeclare.getProjectName());
+						_tempMap.put("buildDetailPlace", _projectDeclare.getBuildDetailPlace());
+						list_1.add(_tempMap);
+					}
+				}
+				model.addAttribute("declareList", JSONArray.fromObject(list_1));
+		return "modules/map/mapPic";
+	}
+	@RequiresPermissions("project:projectDeclare:view")
+	@RequestMapping(value = "showMap")
+	public String showMap(RedirectAttributes redirectAttributes,Model model,String longitude,String latitude,String buildDetailPlace,String projectName){
+		model.addAttribute("longitude", longitude);
+		model.addAttribute("latitude", latitude);
+		model.addAttribute("buildDetailPlace",buildDetailPlace);
+		model.addAttribute("projectName",projectName);
+		return "modules/map/map";
+	}
+   
+	@RequiresPermissions("project:projectDeclare:view")
+	@RequestMapping(value = "mapChart")
+	public String showMapChart(RedirectAttributes redirectAttributes,Model model,String code,String name,String type,String attribute){
+		//组装参数
+		ProjectDeclare projectDeclareDto = new ProjectDeclare();
+		projectDeclareDto.setProjectCode(code);
+		projectDeclareDto.setProjectName(name);
+		projectDeclareDto.setProjectType(type);
+		projectDeclareDto.setProjectAttribute(attribute);
+		ArrayList<ProjectDeclare> list  = projectDeclareService.queryProject(projectDeclareDto);
+		List<Map<String,Object>> list_1 = new ArrayList<>();
+		Map<String,Object> _tempMap = null;
+		if(!list.isEmpty()){
+			for (ProjectDeclare _projectDeclare : list) {
+				_tempMap = new HashMap();
+				_tempMap.put("longitude",_projectDeclare.getLongitude());
+				_tempMap.put("latitude", _projectDeclare.getLatitude());
+				_tempMap.put("projectName",_projectDeclare.getProjectName());
+				_tempMap.put("buildDetailPlace", _projectDeclare.getBuildDetailPlace());
+				list_1.add(_tempMap);
+			}
+		}
+		model.addAttribute("declareList", JSONArray.fromObject(list_1));
+		model.addAttribute("url","/a/project/projectDeclare/mapChart");
+		model.addAttribute("ProjectDeclare",projectDeclareDto);
+		model.addAttribute("chartType","project");
+		return "modules/map/mapChart";
+	}
 	@RequiresPermissions("project:projectDeclare:view")
 	@RequestMapping(value = "show")
 	public String show( RedirectAttributes redirectAttributes,Model model,ProjectDeclare projectDeclare) {
@@ -307,5 +364,4 @@ public class ProjectDeclareController extends BaseController {
 			projectDeclare.setProjectType("核准");
 		}
 	}
-
 }

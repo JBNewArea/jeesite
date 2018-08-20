@@ -124,4 +124,9 @@ public class ProjectDeclareService extends CrudService<ProjectDeclareDao, Projec
 	public moneyCount getMoney(){
 		return projectDeclareDao.getMoney();
 	}
+	
+	@Transactional(readOnly = false)
+	public ArrayList<ProjectDeclare>  queryProject(ProjectDeclare projectDeclare){
+		return projectDeclareDao.queryProject(projectDeclare);
+	}
 }

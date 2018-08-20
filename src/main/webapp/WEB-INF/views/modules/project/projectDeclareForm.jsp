@@ -4,11 +4,15 @@
 <head>
 	<title>项目入库管理</title>
 	<meta name="decorator" content="default"/>
+	<link rel="stylesheet" href="${ctxStatic}/layer/theme/default/layer.css"  media="all">
 	<style type="text/css">
 		.textarea{
 			width:260px;	
 		}
+		#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
 	</style>
+	<script src="${ctxStatic}/layer/layer.js" charset="utf-8"></script>
+	<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 	<script type="text/javascript">
 		$(document).ready(function() {
 			//$("#name").focus();
@@ -26,6 +30,34 @@
 						error.insertAfter(element);
 					}
 				}
+			});
+			$("#mapImg").click(function(){
+				var longitude = '${projectDeclare.longitude}';
+				var latitude = '${projectDeclare.latitude}';
+				var projectName = '${projectDeclare.projectName}';
+				var buildDetailPlace = '${projectDeclare.buildDetailPlace}';
+				if(longitude.length > 0 && latitude.length>0){
+					//在这里面输入任何合法的js语句
+					layer.open({
+	                    content:'/jeesite/a/project/projectDeclare/showMap?longitude='+longitude+'&latitude='+latitude+'&projectName='+projectName+'&buildDetailPlace='+buildDetailPlace,
+				        success:function(layero, index){},
+				        title : false,
+				        type : 2,
+				        closeBtn:0,
+				        area : [ "800px", "700px" ],
+				        btn:['关闭'],
+				        yes:function(index,layero){
+				        	layer.close(index);
+				        }
+	    			}) 
+				}else{
+					layer.msg('无法获取到经纬度!');
+				}
+			});
+			$("#searchCompany").click(function(){
+				var legal = $("#legalUnitInfo").val();
+				var arr = legal.split('/');
+				window.location.href="${pageContext.request.contextPath}/a/company/company/?companyCreditcode="+arr[2];
 			});
 		});
 		function addRow(list, idx, tpl, row){
@@ -73,20 +105,20 @@
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="projectDeclare" action="${ctx}/project/projectDeclare/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
-		<sys:message content="${message}"/>		
-		<div class="control-group">
+		<sys:message content="${message}"/>	
+		<div class="control-group" >
+			<label class="control-label">项目代码：<font color="red">*</font> </label>
+			<div class="controls">
+				<form:input path="projectCode" htmlEscape="false" maxlength="64" class="input-large required"/>
+				<input id="searchCompany" class="btn btn-primary" type="button" value="企业" />
+			</div>
+		</div>	
+		<div class="control-group" style="float:right;margin-top:-3%;margin-right:44%;">
 			<label class="control-label">申报时间：</label>
 			<div class="controls">
 				<input name="declareDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
 					value="<fmt:formatDate value="${projectDeclare.declareDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
-				<span class="help-inline"><font color="red">*</font> </span>
-			</div>
-		</div>
-		<div class="control-group" style="float:right;margin-top:-3%;margin-right:38%;">
-			<label class="control-label">项目代码：</label>
-			<div class="controls">
-				<form:input path="projectCode" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
@@ -224,13 +256,27 @@
 		<div class="control-group">
 			<label class="control-label">所属街道：</label>
 			<div class="controls">
-				<form:input path="bumenFirst" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+				<%-- <form:input path="bumenFirst" htmlEscape="false" maxlength="64" class="input-xlarge "/> --%>
+				<form:select path="transstreet" class="input-xlarge ">
+					<form:option value="" label=""/>
+					<form:options items="${fns:getDictList('street_dict')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
 			</div>
 		</div>
 		<div class="control-group" style="float:right;margin-top:-3%;margin-right:39%;">
 			<label class="control-label">所属平台：</label>
 			<div class="controls">
-				<form:input path="bumenFirst" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+				<%-- <form:input path="bumenFirst" htmlEscape="false" maxlength="64" class="input-xlarge "/> --%>
+				<form:select path="transterrace" class="input-xlarge ">
+					<form:option value="" label=""/>
+					<form:options items="${fns:getDictList('tran_dict')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
+			</div>
+		</div>
+		<div class="control-group" style="float:right;margin-top:-3%;margin-right:26%;">
+			<label class="control-label">地图定位：</label>
+			<div class="controls">
+				   <img id="mapImg" alt="" src="${ctxStatic}/images/map.png" width="30" height="30">
 			</div>
 		</div>
 		<div class="control-group">
@@ -315,3 +361,4 @@
 	</form:form>
 </body>
 </html>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=A5KDCk9IQZULG0LNauvyUMbwKLveDF3D"></script>

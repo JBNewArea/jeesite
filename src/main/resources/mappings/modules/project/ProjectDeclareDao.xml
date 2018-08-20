@@ -30,7 +30,11 @@
 		a.update_by AS "updateBy.id",
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
-		a.del_flag AS "delFlag"
+		a.del_flag AS "delFlag",
+		a.longitude as "longitude",
+		a.latitude as "latitude",
+		a.platform as "transterrace",
+		a.street as "transstreet"
 	</sql>
 	
 	<sql id="projectDeclareJoins">
@@ -74,6 +78,12 @@
 					<if test="dbName == 'oracle'">'%'||#{guanli}||'%'</if>
 					<if test="dbName == 'mssql'">'%'+#{guanli}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{guanli},'%')</if>
+			</if>
+			<if test="legalUnitInfo != null and legalUnitInfo != ''">
+				AND a.legal_unit_info LIKE 
+					<if test="dbName == 'oracle'">'%'||#{legalUnitInfo}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{legalUnitInfo}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{legalUnitInfo},'%')</if>
 			</if>
 		</where>
 		<choose>
@@ -133,7 +143,9 @@
 			update_by,
 			update_date,
 			remarks,
-			del_flag
+			del_flag,
+			platform,
+		    street
 		) VALUES (
 			#{id},
 			#{declareDate},
@@ -162,7 +174,9 @@
 			#{updateBy.id},
 			#{updateDate},
 			#{remarks},
-			#{delFlag}
+			#{delFlag},
+			#{transterrace},
+			#{transstreet}
 		)
 	</insert>
 	
@@ -191,7 +205,9 @@
 		caozuodate_first = #{caozuodateFirst},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
-			remarks = #{remarks}
+			remarks = #{remarks},
+			platform = #{transterrace},
+		    street = #{transstreet}
 		WHERE id = #{id}
 	</update>
 	
@@ -276,5 +292,24 @@ SUM(CASE WHEN MONTH(declare_date) =12 THEN 1 ELSE 0 END) december
 			count(case when money >= 10000 then 'big' end) big
 		 from project_declare 
 		 where del_flag = '0'
+	</select>
+	
+	<select id="queryProject" resultType="ProjectDeclare">
+		SELECT 
+			<include refid="projectDeclareColumns"/>
+		FROM project_declare a where a.del_flag='0' and a.longitude is not null
+		
+		<if test="projectCode != null and projectCode != ''">
+			 AND a.project_code = #{projectCode}
+		</if>
+		<if test="projectName != null and projectName != ''">
+			 AND  a.project_name = #{projectName}
+		</if>
+		<if test="projectType !=null and projectType !=''">
+		   AND a.project_type = #{projectType}
+		</if>
+		<if test="projectAttribute !=null and projectAttribute !=''">
+			 AND a.project_attribute = #{projectAttribute}
+		</if>
 	</select>
 </mapper>

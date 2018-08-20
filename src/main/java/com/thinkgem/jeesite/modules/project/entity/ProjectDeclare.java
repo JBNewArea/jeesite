@@ -52,6 +52,14 @@ public class ProjectDeclare extends DataEntity<ProjectDeclare> {
 	private String bihao;//编号，用于填充excel
 	private String beizhu; //用于读取备注填充remarks
 	
+	
+	private String transstreet;//所属街道
+	private String transterrace;//所属平台
+	
+	private String longitude;//经度
+	private String latitude;//纬度
+	private String platform;
+	
 	private Date dateStart;
 	private Date dateEnd;
 	
@@ -334,8 +342,44 @@ public class ProjectDeclare extends DataEntity<ProjectDeclare> {
 		this.dateEnd = dateEnd;
 	}
 
-	 
-	
-	
+	public String getTransstreet() {
+		return transstreet;
+	}
+
+	public void setTransstreet(String transstreet) {
+		this.transstreet = transstreet;
+	}
+
+	public String getTransterrace() {
+		return transterrace;
+	}
+
+	public void setTransterrace(String transterrace) {
+		this.transterrace = transterrace;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getPlatform() {
+		return platform;
+	}
+
+	public void setPlatform(String platform) {
+		this.platform = platform;
+	}
 	
 }
