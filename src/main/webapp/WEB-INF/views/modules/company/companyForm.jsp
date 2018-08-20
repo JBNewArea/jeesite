@@ -9,9 +9,9 @@
 			width:260px;	
 		}
 	</style>
+	<script src="${ctxStatic}/layer/layer.js" charset="utf-8"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			//$("#name").focus();
 			$("#inputForm").validate({
 				submitHandler: function(form){
 					loading('正在提交，请稍等...');
@@ -27,6 +27,33 @@
 					}
 				}
 			});
+			$("#mapImg").click(function(){
+				var longitude = '${company.longitude}';
+				var latitude = '${company.latitude}';
+				var companyname = '${company.companyname}';
+				var companydomicile = '${company.companydomicile}';
+				if(longitude.length > 0 && latitude.length>0){
+					//在这里面输入任何合法的js语句
+					layer.open({
+	                    content:'/jeesite/a/company/company/showMap?longitude='+longitude+'&latitude='+latitude+'&companyname='+companyname+'&companydomicile='+companydomicile,
+				        success:function(layero, index){},
+				        title : false,
+				        type : 2,
+				        closeBtn:0,
+				        area : [ "800px", "700px" ],
+				        btn:['关闭'],
+				        yes:function(index,layero){
+				        	layer.close(index);
+				        }
+	    			}) 
+				}else{
+					layer.msg('无法获取到经纬度!');
+				}
+			});
+			$("#searchProject").click(function(){
+    			var code = $("#companyCreditcode").val();
+    			window.location.href="${pageContext.request.contextPath}/a/project/projectDeclare/?legalUnitInfo="+code;
+			})
 		});
 	</script>
 </head>
@@ -40,10 +67,10 @@
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>		
 		<div class="control-group">
-			<label class="control-label">企业信用代码：</label>
+			<label class="control-label">企业信用代码：<font color="red">*</font></label>
 			<div class="controls">
-				<form:input path="companyCreditcode" htmlEscape="false" maxlength="18" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
+				<form:input path="companyCreditcode" htmlEscape="false" maxlength="18" class="input-large required" />
+				<input id="searchProject" class="btn btn-primary" type="button" value="项目" />
 			</div>
 		</div>
 		<div class="control-group" style="float:right;margin-top:-3%;margin-right:40%;">
@@ -341,16 +368,30 @@
 				<form:input path="cubeStyle" htmlEscape="false" maxlength="50" class="input-xlarge "/>
 			</div>
 		</div>
+		<div class="control-group" style="float:right;margin-top:-3.1%;margin-right:25%;">
+			<label class="control-label">地图定位：</label>
+			<div class="controls">
+				   <img id="mapImg" alt="" src="${ctxStatic}/images/map.png" width="30" height="30">
+			</div>
+		</div>
 		<div class="control-group">
 			<label class="control-label">所属街道：</label>
 			<div class="controls">
-				<form:input path="transstreet" htmlEscape="false" maxlength="50" class="input-xlarge "/>
+				<%-- <form:input path="transstreet" htmlEscape="false" maxlength="50" class="input-xlarge "/> --%>
+				<form:select path="transstreet" class="input-xlarge ">
+					<form:option value="" label=""/>
+					<form:options items="${fns:getDictList('street_dict')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
 			</div>
 		</div>
 		<div class="control-group" style="float:right;margin-top:-3%;margin-right:40%;">
 			<label class="control-label">所属平台：</label>
 			<div class="controls">
-				<form:input path="transterrace" htmlEscape="false" maxlength="50" class="input-xlarge "/>
+				<%-- <form:input path="transterrace" htmlEscape="false" maxlength="50" class="input-xlarge "/> --%>
+				<form:select path="transterrace" class="input-xlarge ">
+					<form:option value="" label=""/>
+					<form:options items="${fns:getDictList('tran_dict')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
 			</div>
 		</div>
 		<div class="control-group" >

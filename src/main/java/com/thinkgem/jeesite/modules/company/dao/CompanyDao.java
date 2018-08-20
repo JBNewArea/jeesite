@@ -31,5 +31,6 @@ public interface CompanyDao extends CrudDao<Company> {
 	monthData getzhexianhangyeData(Map map);
 	ArrayList<Company> analyze_credit();
 	ArrayList<Company> sel_industry();
+	ArrayList<Company> queryCompany(Company companyDto);
 	
 }

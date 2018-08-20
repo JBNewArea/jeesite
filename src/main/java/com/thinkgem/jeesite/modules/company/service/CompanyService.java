@@ -108,4 +108,9 @@ public class CompanyService extends CrudService<CompanyDao, Company> {
 	public ArrayList<Company> sel_industry(){
 		return companyDao.sel_industry();
 	}
+	
+	@Transactional(readOnly = false)
+	public ArrayList<Company> queryCompany(Company companyDto){
+		return companyDao.queryCompany(companyDto);
+	}
 }

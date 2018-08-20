@@ -55,7 +55,11 @@
 		a.update_by AS "updateBy.id",
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
-		a.del_flag AS "delFlag"
+		a.del_flag AS "delFlag",
+		a.longitude as "longitude",
+		a.latitude as "latitude",
+		a.platform as "transterrace",
+		a.street as "transstreet"
 	</sql>
 	
 	<sql id="companyJoins">
@@ -100,6 +104,13 @@
 					<if test="dbName == 'oracle'">'%'||#{industryInvolved}||'%'</if>
 					<if test="dbName == 'mssql'">'%'+#{industryInvolved}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{industryInvolved},'%')</if>
+			</if>
+			
+			<if test="companyCreditcode != null and companyCreditcode != ''">
+				AND a.company_creditcode LIKE 
+					<if test="dbName == 'oracle'">'%'||#{companyCreditcode}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{companyCreditcode}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{companyCreditcode},'%')</if>
 			</if>
 		</where>
 		<choose>
@@ -184,7 +195,9 @@
 			update_by,
 			update_date,
 			remarks,
-			del_flag
+			del_flag,
+			platform,
+			street
 		) VALUES (
 			#{id},
 			#{companyCreditcode},
@@ -238,7 +251,9 @@
 			#{updateBy.id},
 			#{updateDate},
 			#{remarks},
-			#{delFlag}
+			#{delFlag},
+			#{transterrace},
+			#{transstreet}
 		)
 	</insert>
 	
@@ -292,7 +307,9 @@
 			cube_style = #{cubeStyle},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
-			remarks = #{remarks}
+			remarks = #{remarks},
+			platform=#{transterrace},
+			street=#{transstreet}
 		WHERE id = #{id}
 	</update>
 	
@@ -434,5 +451,18 @@ count(distinct case WHEN MONTH(business_Hours_start) =12 THEN industry_involved 
 	
 	<select id="getAllType" resultType="com.thinkgem.jeesite.modules.company.entity.echartsData">
 		select company_Type as name,count(company_Type) as value from company where del_flag = '0' group by company_Type 
+	</select>
+	<select id="queryCompany" resultType="company">
+		select a.company_place AS "companyPlace",a.companyname AS "companyname",a.longitude as "longitude", a.latitude as "latitude" from company a where a.del_flag = '0' and a.longitude is not null   
+		<if test="companyCreditcode != null and companyCreditcode != ''">
+			 AND a.company_creditCode = #{companyCreditcode}
+		</if>
+		<if test="companyname != null and companyname != ''">
+			 AND  a.companyName = #{companyname}  
+		</if>
+		<if test="companyQualityrating !=null and companyQualityrating !=''">
+		   AND a.company_qualityRating = #{companyQualityrating}
+		</if>
+		LIMIT 1000
 	</select>
 </mapper>

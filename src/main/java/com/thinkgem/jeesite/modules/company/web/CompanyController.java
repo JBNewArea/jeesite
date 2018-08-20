@@ -12,13 +12,9 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Random;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
-
-import org.activiti.engine.impl.util.json.JSONArray;
-import org.activiti.engine.impl.util.json.JSONObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.omg.CORBA.portable.ApplicationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,14 +27,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.google.common.collect.Lists;
-import com.mysql.fabric.xmlrpc.base.Array;
 import com.thinkgem.jeesite.common.beanvalidator.BeanValidators;
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.web.BaseController;
-import com.thinkgem.jeesite.common.utils.ObjectUtils;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.utils.excel.ExportExcel;
 import com.thinkgem.jeesite.common.utils.excel.ImportExcel;
@@ -49,6 +42,8 @@ import com.thinkgem.jeesite.modules.company.entity.personCount;
 import com.thinkgem.jeesite.modules.company.service.CompanyService;
 import com.thinkgem.jeesite.modules.project.entity.monthData;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 /**
  * 项目库建设Controller
  * @author freedomtaojie
@@ -81,6 +76,54 @@ public class CompanyController extends BaseController {
 		return "modules/company/companyList";
 	}
 
+
+	/**
+	 * 通过企业展示项目
+	 * @param redirectAttributes
+	 * @param model
+	 * @return
+	 */
+	@RequiresPermissions("company:company:view")
+	@RequestMapping(value = "showProject")
+	public String showProject(RedirectAttributes redirectAttributes,Model model){
+		return "modules/company/companyPro";
+	}
+	@RequiresPermissions("company:company:view")
+	@RequestMapping(value = "showMap")
+	public String showMap(RedirectAttributes redirectAttributes,Model model,String longitude,String latitude,String companyname,String companydomicile){
+		model.addAttribute("longitude", longitude);
+		model.addAttribute("latitude", latitude);
+		model.addAttribute("companyname",companyname);
+		model.addAttribute("companydomicile",companydomicile);
+		return "modules/map/map";
+	}
+	
+	@RequiresPermissions("company:company:view")
+	@RequestMapping(value = "mapChart")
+	public String showMapChart(RedirectAttributes redirectAttributes,Model model,String code,String name,String companyQualityrating){
+		Company companyDto = new Company();
+		companyDto.setCompanyCreditcode(code);
+		companyDto.setCompanyname(name);
+		companyDto.setCompanyQualityrating(companyQualityrating);
+		 ArrayList<Company> list  = companyService.queryCompany(companyDto);
+		 JSONArray json = new JSONArray();
+		 JSONObject jo =null;
+		if(!list.isEmpty()){
+			for (Company company : list) {
+				 jo = new JSONObject();
+				 jo.put("longitude",company.getLongitude());
+				 jo.put("latitude", company.getLatitude());
+				 jo.put("projectName",company.getCompanyname());
+				 jo.put("buildDetailPlace", company.getCompanyPlace());
+				 json.add(jo);
+			}
+		}
+		model.addAttribute("declareList",json);
+		model.addAttribute("url","/a/company/company/mapChart");
+		model.addAttribute("chartType","company");
+		model.addAttribute("Company",companyDto);
+		return "modules/map/mapChart";
+	}
 	@RequiresPermissions("company:company:view")
 	@RequestMapping(value = "form")
 	public String form(Company company, Model model) {
@@ -88,6 +131,7 @@ public class CompanyController extends BaseController {
 		return "modules/company/companyForm";
 	}
 
+	
 	@RequiresPermissions("company:company:edit")
 	@RequestMapping(value = "save")
 	public String save(Company company, Model model, RedirectAttributes redirectAttributes) {
