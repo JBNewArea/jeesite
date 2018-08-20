@@ -73,6 +73,10 @@ public class Company extends DataEntity<Company> {
 	private Date dateStart;//用于筛选
 	private Date dateEnd;//用于筛选
 	
+	private String longitude;//经度
+	private String latitude;//纬度
+	private String platform;
+	
 	private String dateYear;//用于筛选
 	
 	private String creditNum;
@@ -546,6 +550,30 @@ public class Company extends DataEntity<Company> {
 
 	public void setTransterrace(String transterrace) {
 		this.transterrace = transterrace;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getPlatform() {
+		return platform;
+	}
+
+	public void setPlatform(String platform) {
+		this.platform = platform;
 	}
 	
 }
