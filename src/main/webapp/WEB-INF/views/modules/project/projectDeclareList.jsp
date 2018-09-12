@@ -55,6 +55,9 @@
 			<li><label>管理行业：</label>
 				<form:input path="guanli" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
+			<li><label>申报单位：</label>
+				<form:input path="projectUnit" htmlEscape="false" maxlength="64" class="input-medium"/>
+			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
 		</ul>

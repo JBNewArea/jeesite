@@ -85,6 +85,12 @@
 					<if test="dbName == 'mssql'">'%'+#{legalUnitInfo}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{legalUnitInfo},'%')</if>
 			</if>
+			<if test="projectUnit != null and projectUnit != ''">
+				AND a.project_unit LIKE 
+					<if test="dbName == 'oracle'">'%'||#{projectUnit}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{projectUnit}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{projectUnit},'%')</if>
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
