@@ -1,0 +1,271 @@
+.bj{
+		width: 780px;
+		height: 1300px;
+		background: white;
+		background-size: 100% 100%;
+		margin: 0 auto;
+	}
+.wkj{
+	width: 780px;
+	height: 965px;
+	margin: 0 auto;
+	position: relative;
+	background: url(../bdimg//bj.jpg) 0 -70px no-repeat;
+	top:0;
+	}
+/* .title{
+	width: 100%;
+	font-size: 30px;
+	font-weight: bold;
+	color:  #4066ad;
+	text-align: center;
+} */
+.smk{
+	position: absolute;
+	border: 1px solid #4066ad;
+	background: -webkit-linear-gradient(#eff0f8, #fafdfd, #feffff);
+	background: -o-linear-gradient(#eff0f8, #fafdfd, #feffff);
+	background: -moz-linear-gradient(#eff0f8, #fafdfd, #feffff);
+	background: linear-gradient(to #eff0f8, #fafdfd, #feffff); 
+}
+.smk div{
+	border-left: 1px solid #4066ad;
+	border-right: 1px solid #4066ad;
+	margin: 0 10px;
+}
+.smk div p:nth-child(1){
+	font-size: 14px;
+	font-weight: bold;
+	width: 100%;
+	text-align: center;
+	color: red;
+	}
+.smk div p:nth-child(2){
+	font-size: 14px;
+	font-weight: bold;
+	width: 100%;
+	text-align: center;
+	color: #4066ad;
+}
+.smk  p:nth-child(3){
+	font-size: 14px;
+	font-weight: bold;
+	width: 100%;
+	text-align: center;
+	color: #4066ad;
+}
+.smxk{
+	position: absolute;
+	border: 1px dashed #4066ad;
+	background: -webkit-linear-gradient(#eff0f8, #fafdfd, #feffff);
+	background: -o-linear-gradient(#eff0f8, #fafdfd, #feffff);
+	background: -moz-linear-gradient(#eff0f8, #fafdfd, #feffff);
+	background: linear-gradient(to #eff0f8, #fafdfd, #feffff); 
+}
+.smxk div{
+	border-left: 1px dashed #4066ad;
+	border-right: 1px dashed #4066ad;
+	margin: 0 10px;
+	height:100%;
+}
+.smxk div p:nth-child(1){
+	font-size: 14px;
+	font-weight: bold;
+	width: 100%;
+	text-align: center;
+	color: red;
+	}
+.smxk div p:nth-child(2){
+	font-size: 14px;
+	font-weight: bold;
+	width: 100%;
+	text-align: center;
+	color: #4066ad;
+}
+.smk p:nth-child(1){
+	font-size: 14px;
+	font-weight: bold;
+	width: 100%;
+	text-align: center;
+	color: red;
+	}
+.smk p:nth-child(2){
+	font-size: 14px;
+	font-weight: bold;
+	width: 100%;
+	text-align: center;
+	color: #4066ad;
+	}
+.spj{
+	width: 240px;
+	top:26px;
+	left: 269px;
+}
+.ggzy{
+	width: 140px;
+	padding: 5PX 0;
+	top:117px;
+	left: 326px;
+}
+.gtj{
+	width: 150px;
+	padding: 5PX 0;
+	top:243px;
+	left: 104px;
+}
+.gtj1{
+	width: 150px;
+	padding: 5PX 0;
+	top:202px;
+	left: 315px;
+}
+.spj1{
+	width: 190px;
+	top:297px;
+	left: 293px;
+}
+.jjj{
+	width: 150px;
+	top:334px;
+	left: 545px;
+}
+.gtj2{
+	width: 150px;
+	padding: 5PX 0;
+	top:401px;
+	left: 98px;
+}
+.gtj3{
+	width: 150px;
+	padding: 5PX 0;
+	top:401px;
+	left: 317px;
+}
+.spj2{
+	width: 210px;
+	top:506px;
+	left: 286px;
+	height:123px;
+}
+.jjspj{
+	width: 205px;
+	top:520px;
+	left: 527px;
+}
+.ggzyjy{
+	width: 170px;
+	padding: 5PX 0;
+	top:598px;
+	left: 103px;
+}
+.spj3{
+	width: 150px;
+	top:695px;
+	left: 101px;
+}
+.jjj1{
+	width: 190px;
+	top:698px;
+	left: 290px;
+}
+.djl{
+	width: 180px;
+	top:713px;
+	left: 531px;
+}
+
+.spj4{
+	width: 250px;
+	top:824px;
+	left: 266px;
+}
+
+.down{
+	width: 0; 
+	height: 0; 
+	border-left: 5px solid transparent; 
+	border-right: 5px solid transparent; 
+	border-top: 10px solid #4066ad; 
+}
+.left{
+	width: 0; 
+	height: 0; 
+	border-top: 5px solid transparent; 
+	border-right: 10px solid #4066ad; 
+	border-bottom: 5px solid transparent; 
+}
+.right{
+	width: 0; 
+	height: 0; 
+	border-top: 5px solid transparent; 
+	border-left: 10px solid #4066ad; 
+	border-bottom: 5px solid transparent; 
+}
+
+.bottom{
+	width: 780px;
+	margin-top: 0px;
+}
+.bottom p:nth-child(1){
+	font-size: 13px;
+	color: black;
+}
+.bottom p:nth-child(2){
+	font-size: 13px;
+	color: black;
+	text-indent: 3em;
+}
+
+.plc{
+	width: 300%;
+	border: 1px solid black;
+	background: #f3e2a7;
+	padding: 20px 20px;
+	position: absolute;
+	opacity: 1;
+	display: none;
+	z-index: 999;
+}
+
+.plc p{
+	font-size: 13px!important;
+	color: black!important;
+	text-align:left!important;
+}
+.on{
+	display: block;
+}
+
+
+/* ������������ʽ */
+
+.bold{
+	font-weight:bold;
+}
+.red{
+	color: red;
+}
+.blue{
+	color: blue;
+}
+.font14{
+	font-size: 14px;
+}
+.font15{
+	font-size: 15px;
+}
+.font16{
+	font-size: 16px;
+}
+.font17{
+	font-size: 17px;
+}
+.font18{
+	font-size: 18px;
+}
+.indent{
+	text-indent: 4em;
+}
+.plc .centen{
+	text-align: center!important;
+}

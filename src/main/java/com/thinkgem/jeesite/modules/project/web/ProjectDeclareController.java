@@ -289,6 +289,12 @@ public class ProjectDeclareController extends BaseController {
 		return "modules/project/batch";
 	}
 	
+
+	@RequiresPermissions("project:projectDeclare:view")
+	@RequestMapping(value = "showFlowChart")
+	public String showFlowChart(){
+		return "modules/project/lct_zf";
+	}
 	/**
 	 * 导入企业信息数据
 	 * @param file

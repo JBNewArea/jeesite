@@ -31,6 +31,21 @@
 					}
 				}
 			});
+			$("#lct").click(function(){
+				layer.open({
+					title : false,
+					content:'/jeesite/a/project/projectDeclare/showFlowChart',
+					success:function(layero, index){},
+			        title : false,
+			        type : 2,
+			        closeBtn:0,
+			        area : [ "80%", "100%" ],
+			        btn:['关闭'],
+			        yes:function(index,layero){
+			        	layer.close(index);
+			        }
+				});
+			});
 			$("#mapImg").click(function(){
 				var longitude = '${projectDeclare.longitude}';
 				var latitude = '${projectDeclare.latitude}';
@@ -355,6 +370,7 @@
 				</div>
 			</div>
 		<div class="form-actions">
+			<input id="lct" class="btn btn-primary" type="button" value="流程图"/>
 			<shiro:hasPermission name="project:projectDeclare:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
 		</div>
