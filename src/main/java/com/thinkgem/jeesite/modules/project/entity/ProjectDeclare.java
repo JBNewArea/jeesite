@@ -91,7 +91,7 @@ public class ProjectDeclare extends DataEntity<ProjectDeclare> {
 		this.bihao = bihao;
 	}
 
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@NotNull(message="申报时间不能为空")
 	@ExcelField(title="申报日期", align=2, sort=20)
 	public Date getDeclareDate() {
@@ -272,7 +272,7 @@ public class ProjectDeclare extends DataEntity<ProjectDeclare> {
 		this.wenhaoFirst = wenhaoFirst;
 	}
 
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@ExcelField(title="日期", align=2, sort=110)
 	public Date getRiqiFirst() {
 		return riqiFirst;
@@ -292,7 +292,7 @@ public class ProjectDeclare extends DataEntity<ProjectDeclare> {
 		this.bumenFirst = bumenFirst;
 	}
 
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@ExcelField(title="实际操作时间", align=2, sort=120)
 	public Date getCaozuodateFirst() {
 		return caozuodateFirst;

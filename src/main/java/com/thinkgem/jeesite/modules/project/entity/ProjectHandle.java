@@ -74,12 +74,11 @@ public class ProjectHandle extends DataEntity<ProjectHandle> {
 		this.endCode = endCode;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@NotNull(message="日期不能为空")
 	public Date getDate() {
 		return date;
 	}
-
 	public void setDate(Date date) {
 		this.date = date;
 	}
@@ -93,7 +92,7 @@ public class ProjectHandle extends DataEntity<ProjectHandle> {
 		this.office = office;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@NotNull(message="实际操作时间不能为空")
 	public Date getCaozuoDate() {
 		return caozuoDate;

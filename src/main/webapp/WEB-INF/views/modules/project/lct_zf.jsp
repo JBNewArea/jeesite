@@ -4,6 +4,31 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="${pageContext.request.contextPath}/static/lct_zf/css/lct.css" rel="stylesheet">
+<style type="text/css">
+.sm_1{
+	position: absolute;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(64, 102, 173);
+    border-image: initial;
+    text-align:center;
+    background-color: #00CD00;
+ }
+.sm_1 p:nth-child(2) {
+    font-size: 14px;
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
+    color: #4066ad;
+}
+p{
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+</style>
 </head>
 <body>
 <div class="bj">
@@ -12,9 +37,9 @@
 			<!-- <p class="title" style="width: 100%;font-size: 30px;font-weight: bold;color:  #4066ad;text-align: center;">(征求意见稿)</p> -->
 		</div>
 		<div class="wkj">
-			<div class="spj smk" >
-				<p style="color:green;">审批局</p> 
-				<p>项目备案或核准</p>
+			<div class="spj sm_1" >
+					<p style="color:red;">审批局</p> 
+					<p >项目备案或核准</p>
 				<div class="plc spj-pf">
 					<p class="centen font16">审批局 </p>
 					<p class="font15">一 事项1</p>

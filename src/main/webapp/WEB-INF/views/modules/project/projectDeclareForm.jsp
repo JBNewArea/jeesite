@@ -15,7 +15,6 @@
 	<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 	<script type="text/javascript">
 		$(document).ready(function() {
-			//$("#name").focus();
 			$("#inputForm").validate({
 				submitHandler: function(form){
 					loading('正在提交，请稍等...');
@@ -132,8 +131,8 @@
 			<label class="control-label">申报时间：</label>
 			<div class="controls">
 				<input name="declareDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
-					value="<fmt:formatDate value="${projectDeclare.declareDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+					value="<fmt:formatDate value="${projectDeclare.declareDate}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
@@ -250,8 +249,8 @@
 			<label class="control-label">日期：</label>
 			<div class="controls">
 				<input name="riqiFirst" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
-					value="<fmt:formatDate value="${projectDeclare.riqiFirst}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+					value="<fmt:formatDate value="${projectDeclare.riqiFirst}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 			</div>
 		</div>
 		<div class="control-group" style="float:right;margin-top:-3%;margin-right:39%;">
@@ -264,8 +263,8 @@
 			<label class="control-label">实际操作时间：</label>
 			<div class="controls">
 				<input name="caozuodateFirst" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
-					value="<fmt:formatDate value="${projectDeclare.caozuodateFirst}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+					value="<fmt:formatDate value="${projectDeclare.caozuodateFirst}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -281,7 +280,6 @@
 		<div class="control-group" style="float:right;margin-top:-3%;margin-right:39%;">
 			<label class="control-label">所属平台：</label>
 			<div class="controls">
-				<%-- <form:input path="bumenFirst" htmlEscape="false" maxlength="64" class="input-xlarge "/> --%>
 				<form:select path="transterrace" class="input-xlarge ">
 					<form:option value="" label=""/>
 					<form:options items="${fns:getDictList('tran_dict')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
@@ -340,14 +338,14 @@
 							</td>
 							<td>
 								<input id="projectHandleList{{idx}}_date" name="projectHandleList[{{idx}}].date" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
-									value="{{row.date}}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+									value="{{row.date}}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 							</td>
 							<td>
 								<input id="projectHandleList{{idx}}_office" name="projectHandleList[{{idx}}].office" type="text" value="{{row.office}}" maxlength="64" class="input-small required"/>
 							</td>
 							<td>
 								<input id="projectHandleList{{idx}}_caozuoDate" name="projectHandleList[{{idx}}].caozuoDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
-									value="{{row.caozuoDate}}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+									value="{{row.caozuoDate}}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 							</td>
 							<td>
 								<textarea id="projectHandleList{{idx}}_remarks" name="projectHandleList[{{idx}}].remarks" rows="4" maxlength="255" class="input-small ">{{row.remarks}}</textarea>
